@@ -1,0 +1,32 @@
+{
+	"name": "m-cards",
+	"version": "1.0.0",
+	"workspace": ["./server", "./client"],
+	"tasks": {
+		"dev": "deno test --coverage && deno check && deno lint && deno fmt --check",
+		"dev:watch": "deno check & deno lint --watch & deno fmt --watch --check"
+	},
+	"permissions": {
+		"default": {
+			"net": true,
+			"env": true,
+			"run": true,
+			"read": true,
+			"write": true
+		}
+	},
+	"fmt": {
+		"indentWidth": 4,
+		"lineWidth": 120,
+		"useTabs": true
+	},
+	"exclude": ["./public", "./coverage"],
+	"exports": "./index.ts",
+	"imports": {
+		"@std/expect": "jsr:@std/expect@^1.0.18",
+		"@std/path": "jsr:@std/path@^1.1.4",
+		"@std/random": "jsr:@std/random@^0.1.5",
+		"@std/testing": "jsr:@std/testing@^1.0.17",
+		"~shared/": "./shared/"
+	}
+}

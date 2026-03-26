@@ -1,0 +1,15 @@
+{
+	"name": "@m-cards/client",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact"
+	},
+	"exports": "./index.ts",
+	"imports": {
+		"@preact/signals": "npm:@preact/signals@^2.8.2",
+		"@std/fs": "jsr:@std/fs@^1.0.23",
+		"preact": "npm:preact@^10.29.0",
+		"~client/": "./src/",
+		"~shared/": "../shared/"
+	}
+}

@@ -1,0 +1,19 @@
+.empty-state {
+	color: var(--color-gray);
+	font-size: var(--font-size-large);
+	text-align: center;
+	justify-self: center;
+	margin: 0 auto;
+	align-content: center;
+	height: 100%;
+
+	.empty-state__icon-wrapper {
+		margin-bottom: 20px;
+	}
+
+	.empty-state__icon {
+		width: 256px;
+		height: 256px;
+		fill: var(--color-light-gray);
+	}
+}

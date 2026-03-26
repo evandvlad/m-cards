@@ -1,0 +1,41 @@
+.card-detail-dialog {
+	width: 750px;
+	height: 500px;
+
+	.card-detail-dialog__tabs {
+		display: flex;
+		position: relative;
+		border-top: 1px solid var(--color-lavender);
+		min-height: 100%;
+	}
+
+	.card-detail-dialog__tabs-nav {
+		position: fixed;
+	}
+
+	.card-detail-dialog__tabs-nav-item {
+		font-size: var(--font-size-large);
+		color: var(--color-gray);
+		cursor: pointer;
+		margin: 17px 0;
+
+		&.card-detail-dialog__tabs-nav-item--active {
+			cursor: default;
+			color: var(--color-black);
+		}
+	}
+
+	.card-detail-dialog__tabs-content {
+		border-left: 1px solid var(--color-lavender);
+		padding: 20px 0 0 20px;
+		margin-left: 70px;
+		width: 100%;
+	}
+
+	.card-detail-dialog__card-side-content {
+		display: flex;
+		align-items: safe center;
+		justify-content: center;
+		height: 100%;
+	}
+}

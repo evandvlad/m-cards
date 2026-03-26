@@ -1,0 +1,13 @@
+.overlay {
+	display: flex;
+	position: fixed;
+	border: none;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+
+	&::backdrop {
+		background-color: transparent;
+		cursor: not-allowed;
+	}
+}

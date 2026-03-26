@@ -1,0 +1,24 @@
+.page-content-active-card {
+	--flip-card-perspective: 2500px;
+
+	display: grid;
+	grid-template-columns: 1fr 80px;
+	height: 640px;
+
+	.page-content-active-card__content {
+		display: flex;
+		align-items: safe center;
+		justify-content: center;
+		background-color: var(--color-pale-blue);
+		font-size: var(--font-size-3x-large);
+		padding: 25px 30px;
+		width: 100%;
+		height: 100%;
+		overflow-y: auto;
+	}
+
+	.page-content-active-card__show-next-icon {
+		fill: var(--color-blue);
+		width: 40px;
+	}
+}

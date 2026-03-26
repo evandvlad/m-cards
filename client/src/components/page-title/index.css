@@ -1,0 +1,24 @@
+.page-title {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 5px 0;
+	margin-bottom: 20px;
+
+	.page-title__value {
+		margin-right: 20px;
+	}
+
+	.page-title__details {
+		display: flex;
+		color: var(--color-gray);
+		gap: 10px;
+	}
+
+	.page-title__detail {
+		&:not(&:first-child) {
+			border-left: 1px solid currentColor;
+			padding-left: 10px;
+		}
+	}
+}

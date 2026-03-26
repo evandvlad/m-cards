@@ -1,0 +1,9 @@
+{
+	"name": "@m-cards/server",
+	"exports": "./index.ts",
+	"imports": {
+		"@std/http": "jsr:@std/http@^1.0.25",
+		"~server/": "./",
+		"~shared/": "../shared/"
+	}
+}
