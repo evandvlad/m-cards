@@ -47,13 +47,14 @@ export class CardSetAgent {
 	}
 
 	getData(): CardSet {
-		const { name, meta } = this.#fileAgent.data;
+		const { name, meta, randomCardSides = true } = this.#fileAgent.data;
 		const { id, registeredAt } = meta!;
 
 		return {
 			id,
 			name,
 			registeredAt,
+			randomCardSides,
 			cards: this.#cardSetAgents.map((agent) => agent.getData()).flat(),
 		};
 	}

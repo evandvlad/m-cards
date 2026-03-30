@@ -132,6 +132,7 @@ function createCardSet({ cardsCount }: { cardsCount?: Count } = {}) {
 		id: genId(),
 		name: genText({ minWords: 1, maxWords: 5 }),
 		registeredAt: genDatetime(),
+		randomCardSides: genBool(),
 		cards: createCards({ cardsCount }),
 	};
 

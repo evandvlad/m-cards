@@ -3,9 +3,9 @@ import { signal } from "@preact/signals";
 import type { CardSet } from "~shared/data-values/app.ts";
 
 import type { CardsService } from "~client/web-services/index.ts";
-import { randomInt } from "~client/lib/random/index.ts";
+import { randomItemInArray } from "~client/lib/random/index.ts";
 
-import { ActiveCard } from "./active-card.ts";
+import { ActiveCardViewModel } from "./active-card.ts";
 
 type Params = {
 	id: string;
@@ -17,17 +17,18 @@ export class PageViewModel {
 	title;
 	activeCard;
 
-	#cards;
+	#set;
 
 	static async create({ id, cardsService }: Params) {
 		const cardSet = await cardsService.getCardSet(id);
 		return new this(cardSet);
 	}
 
-	private constructor({ name, cards }: CardSet) {
-		this.title = name;
-		this.#cards = cards;
-		this.isEmpty = this.#cards.length === 0;
+	private constructor(set: CardSet) {
+		this.#set = set;
+
+		this.title = set.name;
+		this.isEmpty = set.cards.length === 0;
 
 		this.activeCard = signal(this.#getRandomActiveCard());
 	}
@@ -37,9 +38,16 @@ export class PageViewModel {
 	};
 
 	#getRandomActiveCard() {
-		const randomIndex = randomInt(this.#cards.length);
-		const { front, back } = this.#cards[randomIndex];
+		const { front, back } = randomItemInArray(this.#set.cards);
 
-		return new ActiveCard({ front, back });
+		const sides = this.#set.randomCardSides && typeof back !== "undefined"
+			? randomItemInArray([{ front, back }, { front: back, back: front }])
+			: { front, back };
+
+		return new ActiveCardViewModel({
+			front: sides.front,
+			back: sides.back,
+			isReversed: sides.front !== front,
+		});
 	}
 }

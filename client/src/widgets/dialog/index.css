@@ -1,0 +1,54 @@
+@keyframes w-dialog-backdrop {
+	0% {
+		opacity: 0;
+	}
+}
+
+.w-dialog {
+	--w-dialog-content-vertical-indent: 15px;
+	--w-dialog-content-horizontal-indent: 20px;
+
+	outline: none;
+	margin-top: 40px;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+
+	&::backdrop {
+		background-color: var(--color-pale-blue);
+		opacity: 0.8;
+		animation: w-dialog-backdrop 0.25s ease-out;
+	}
+
+	.w-dialog__content {
+		background: var(--color-white);
+		display: flex;
+		flex-direction: column;
+		min-width: 200px;
+		width: 100%;
+	}
+
+	.w-dialog__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		padding: var(--w-dialog-content-vertical-indent) var(--w-dialog-content-horizontal-indent);
+		gap: 20px;
+	}
+
+	.w-dialog__header-close-button {
+		transform: translateY(5px);
+		flex-shrink: 0;
+	}
+
+	.w-dialog__header-close-icon {
+		width: 24px;
+	}
+
+	.w-dialog__main {
+		flex: 1;
+		padding: 0 var(--w-dialog-content-horizontal-indent) var(--w-dialog-content-vertical-indent);
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+}

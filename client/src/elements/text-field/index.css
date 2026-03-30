@@ -1,0 +1,16 @@
+.text-field {
+	width: 100%;
+	font: inherit;
+	padding: 10px 15px;
+	outline: none;
+	background: transparent;
+	border: 2px solid var(--color-light-gray);
+
+	&:focus {
+		border-color: var(--color-blue);
+	}
+
+	&::placeholder {
+		color: var(--color-gray);
+	}
+}

@@ -82,6 +82,12 @@ describe("card-set asserter", () => {
 			);
 	});
 
+	it("'randomCardSides' is not boolean", () => {
+		expect(() => assertCardSet({ version: 1, name: "foo", cards: [], randomCardSides: "" }, "E:")).toThrow(
+			`E: The "randomCardSides" must be a boolean or empty.`,
+		);
+	});
+
 	it("'meta' is not object", () => {
 		expect(() => assertCardSet({ version: 1, name: "foo", cards: [], meta: null }, "E:")).toThrow(
 			`The "meta" is incorrect. Must be an object.`,
@@ -177,6 +183,7 @@ describe("card-set asserter", () => {
 				version: 1,
 				name: "foo",
 				cards: ["./baz.json"],
+				randomCardSides: false,
 				meta: {
 					id: "foo",
 					registeredAt: "2026-12-12T10:10:10.123Z",

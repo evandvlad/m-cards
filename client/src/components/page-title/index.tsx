@@ -1,12 +1,6 @@
-import "./index.css";
+import { Details } from "./details.tsx";
 
-function Details({ details }: { details: string[] }) {
-	return (
-		<div class="page-title__details">
-			{details.map((detail, i) => <div key={i} class="page-title__detail">{detail}</div>)}
-		</div>
-	);
-}
+import "./index.css";
 
 type Props = {
 	title: string;

@@ -1,6 +1,7 @@
 import { AppError } from "~shared/lib/error/index.ts";
 import {
 	hasProp,
+	isBoolean,
 	isFilledString,
 	isIsoDatetimeString,
 	isObject,
@@ -21,6 +22,7 @@ export type CardSet = {
 	version: number;
 	name: string;
 	cards: string[];
+	randomCardSides?: boolean;
 	meta?: CardSetMeta;
 };
 
@@ -65,6 +67,10 @@ export function assertCardSet(data: unknown, baseMessage: string): asserts data 
 
 	if (!isFilledString(data.name)) {
 		throw new AppError(`${baseMessage} The "name" must be a non-empty string.`);
+	}
+
+	if (hasProp(data, "randomCardSides") && !isBoolean(data.randomCardSides)) {
+		throw new AppError(`${baseMessage} The "randomCardSides" must be a boolean or empty.`);
 	}
 
 	if (!hasProp(data, "cards")) {

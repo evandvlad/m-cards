@@ -1,6 +1,6 @@
 import type { Card } from "~shared/data-values/app.ts";
 
-import { Dialog } from "~client/components/dialog/index.tsx";
+import { Dialog } from "~client/widgets/dialog/index.tsx";
 
 import { CardInfoViewModel } from "./card-info-view-model.ts";
 import { type TabItem, Tabs } from "./tabs.tsx";

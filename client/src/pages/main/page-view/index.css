@@ -1,0 +1,50 @@
+.page-filter {
+	margin-bottom: 20px;
+}
+
+.page-sets {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+.page-set {
+	height: 278px;
+
+	.page-set__front {
+		display: flex;
+		background-color: var(--color-pale-blue);
+		width: 100%;
+		height: 100%;
+		align-items: safe center;
+		justify-content: center;
+		text-align: center;
+		word-break: break-word;
+		padding: 12px 15px;
+	}
+
+	.page-set__back {
+		display: flex;
+		flex-direction: column;
+		background-color: var(--color-pale-blue);
+		width: 100%;
+		height: 100%;
+		padding: 30px 15px;
+	}
+
+	.page-set__back-links {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	.page-set__back-link {
+		width: 64px;
+		color: var(--color-blue);
+	}
+
+	.page-set__back-info {
+		text-align: center;
+	}
+}

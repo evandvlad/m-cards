@@ -1,0 +1,34 @@
+.page-header {
+	margin-bottom: 20px;
+
+	.page-header__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.page-header__link {
+		flex-shrink: 0;
+		color: var(--color-blue);
+		width: 32px;
+	}
+}
+
+.page-cards {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 20px;
+
+	.page-cards__card {
+		background-color: var(--color-pale-blue);
+		display: flex;
+		align-items: safe center;
+		justify-content: center;
+		height: 138px;
+		cursor: pointer;
+		overflow: hidden;
+		text-align: center;
+		word-break: break-word;
+		padding: 10px 12px;
+	}
+}

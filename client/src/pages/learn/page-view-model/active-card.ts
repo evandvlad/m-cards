@@ -1,14 +1,17 @@
 type Props = {
 	front: string;
 	back?: string;
+	isReversed: boolean;
 };
 
-export class ActiveCard {
+export class ActiveCardViewModel {
 	front;
 	back;
+	isReversed;
 
-	constructor({ front, back }: Props) {
+	constructor({ front, back, isReversed }: Props) {
 		this.front = front;
 		this.back = back;
+		this.isReversed = isReversed;
 	}
 }

@@ -9,6 +9,7 @@ export type Card = {
 export type CardSet = {
 	id: string;
 	name: string;
+	randomCardSides: boolean;
 	cards: Card[];
 	registeredAt: string;
 };

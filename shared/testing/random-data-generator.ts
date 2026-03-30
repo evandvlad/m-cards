@@ -23,7 +23,7 @@ Fusce sit amet commodo turpis. Duis vitae ligula quis lorem gravida hendrerit si
 		.toLowerCase().replace(/\s{2,}|[.,]/g, "").split(" ");
 
 export function genBool() {
-	return sample([true, false]);
+	return sample([true, false])!;
 }
 
 export function genText({ minWords = 1, maxWords = 5 }: { minWords?: number; maxWords?: number } = {}) {

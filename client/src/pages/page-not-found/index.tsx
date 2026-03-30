@@ -1,8 +1,8 @@
-import { renderPage } from "~client/components/page/index.tsx";
+import { renderLayout } from "~client/widgets/layout/index.tsx";
 
-import { PageContent } from "./page-content.tsx";
+import { PageView } from "./page-view.tsx";
 
-renderPage({
+renderLayout({
 	documentTitle: "Page not found",
-	content: <PageContent />,
+	content: <PageView />,
 });

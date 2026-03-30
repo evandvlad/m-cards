@@ -1,15 +1,15 @@
-import type { Card as CardData } from "~shared/data-values/app.ts";
+import type { Card } from "~shared/data-values/app.ts";
 
 import { showCardDetailDialog } from "../card-detail-dialog/index.tsx";
 
-export class Card {
+export class CardViewModel {
 	name;
 	front;
 	back;
 
 	#card;
 
-	constructor(card: CardData) {
+	constructor(card: Card) {
 		this.#card = card;
 
 		this.name = card.name;

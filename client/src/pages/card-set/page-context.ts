@@ -1,4 +1,4 @@
-import { UIContext } from "~client/components/ui-context.tsx";
+import { UIContext } from "~client/widgets/ui-context.tsx";
 
 import type { PageViewModel } from "./page-view-model/index.ts";
 
