@@ -1,6 +1,6 @@
 {
 	"name": "m-cards",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"workspace": ["./server", "./client"],
 	"tasks": {
 		"dev": "deno test --coverage && deno check && deno lint && deno fmt --check",
