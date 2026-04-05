@@ -67,7 +67,7 @@ describe("error", () => {
 
 	describe("is-server-friendly-error", () => {
 		it("server friendly error", () => {
-			expect(isServerFriendlyError({ isItServerFriedlyError: true, message: "Foo" })).toBe(true);
+			expect(isServerFriendlyError({ isItServerFriendlyError: true, message: "Foo" })).toBe(true);
 		});
 
 		it("not server friendly error", () => {
@@ -75,10 +75,10 @@ describe("error", () => {
 			expect(isServerFriendlyError(new AppError("foo"))).toBe(false);
 			expect(isServerFriendlyError("Foo")).toBe(false);
 			expect(isServerFriendlyError({})).toBe(false);
-			expect(isServerFriendlyError({ isItServerFriedlyError: false, message: "Foo" })).toBe(false);
-			expect(isServerFriendlyError({ isItServerFriedlyError: true })).toBe(false);
-			expect(isServerFriendlyError({ isItServerFriedlyError: true, message: 123 })).toBe(false);
-			expect(isServerFriendlyError({ isItServerFriedlyError: true, message: "" })).toBe(false);
+			expect(isServerFriendlyError({ isItServerFriendlyError: false, message: "Foo" })).toBe(false);
+			expect(isServerFriendlyError({ isItServerFriendlyError: true })).toBe(false);
+			expect(isServerFriendlyError({ isItServerFriendlyError: true, message: 123 })).toBe(false);
+			expect(isServerFriendlyError({ isItServerFriendlyError: true, message: "" })).toBe(false);
 		});
 	});
 });

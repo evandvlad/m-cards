@@ -3,7 +3,7 @@ import { hasProp, isFilledString, isNonNullable, isObject } from "~shared/lib/va
 export const generalErrorMessage = "Oh :( Something went wrong.";
 
 export type ServerFriendlyError = {
-	isItServerFriedlyError: true;
+	isItServerFriendlyError: true;
 	message: string;
 };
 
@@ -20,7 +20,7 @@ export function isServerFriendlyError(value: unknown): value is ServerFriendlyEr
 		return false;
 	}
 
-	if (!hasProp(value, "isItServerFriedlyError") || value.isItServerFriedlyError !== true) {
+	if (!hasProp(value, "isItServerFriendlyError") || value.isItServerFriendlyError !== true) {
 		return false;
 	}
 

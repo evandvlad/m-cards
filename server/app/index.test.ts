@@ -127,7 +127,7 @@ describe("app", () => {
 		const data = await response.json();
 
 		expect(data).toEqual({
-			isItServerFriedlyError: true,
+			isItServerFriendlyError: true,
 			message: "Can't find an API resource with this URL and HTTP method.",
 		});
 	});

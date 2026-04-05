@@ -68,7 +68,7 @@ describe("web-io", () => {
 		const errorHandler = spy((e) => e);
 
 		const fixtures = createFixtures({
-			result: { isItServerFriedlyError: true, message: "It's a user frieldly message" },
+			result: { isItServerFriendlyError: true, message: "It's a user friendly message" },
 			isOk: false,
 		});
 
@@ -78,7 +78,7 @@ describe("web-io", () => {
 		const { message } = value as Error;
 
 		expect(value).toBeInstanceOf(AppError);
-		expect(message).toBe("It's a user frieldly message");
+		expect(message).toBe("It's a user friendly message");
 
 		assertSpyCalls(errorHandler, 1);
 		assertSpyCall(fixtures.fetch, 0, {
@@ -90,7 +90,7 @@ describe("web-io", () => {
 		const errorHandler = spy((e) => e);
 
 		const fixture = createFixtures({
-			result: { isItServerFriedlyError: true, message: "" },
+			result: { isItServerFriendlyError: true, message: "" },
 			isOk: false,
 		});
 

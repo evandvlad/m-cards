@@ -2,7 +2,7 @@ import { generalErrorMessage, isAppError, type ServerFriendlyError } from "~shar
 
 function createError({ message, status }: { message: string; status: number }) {
 	const error: ServerFriendlyError = {
-		isItServerFriedlyError: true,
+		isItServerFriendlyError: true,
 		message,
 	};
 

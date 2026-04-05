@@ -55,7 +55,7 @@ export class CardSetAgent {
 			name,
 			registeredAt,
 			randomCardSides,
-			cards: this.#cardSetAgents.map((agent) => agent.getData()).flat(),
+			cards: this.#cardSetAgents.map((agent) => agent.getData()).flat(1),
 		};
 	}
 }
