@@ -107,7 +107,7 @@ describe("app", () => {
 		expect(data.message).toBe("An incorrect request, an id parameter wasn't passed.");
 	});
 
-	it("failure on get card-set with unkown id", async () => {
+	it("failure on get card-set with unknown id", async () => {
 		const fixtures = createFixtures();
 		const app = new App(fixtures);
 
