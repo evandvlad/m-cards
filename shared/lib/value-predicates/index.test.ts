@@ -10,6 +10,7 @@ import {
 	isJsonFilepathString,
 	isNonNullable,
 	isObject,
+	isOneOf,
 	isString,
 	isUInteger,
 } from "./index.ts";
@@ -110,5 +111,12 @@ describe("value-predicates", () => {
 		expect(hasProp({ foo: "bar" }, "foo")).toBe(true);
 		expect(hasProp({}, "toString")).toBe(true);
 		expect(hasProp([], "length")).toBe(true);
+	});
+
+	it("is one of", () => {
+		expect(isOneOf("a", ["a", "b", "c"])).toBe(true);
+		expect(isOneOf("b", ["a", "b", "c"])).toBe(true);
+		expect(isOneOf("d", ["a", "b", "c"])).toBe(false);
+		expect(isOneOf("", ["a", "b", "c"])).toBe(false);
 	});
 });

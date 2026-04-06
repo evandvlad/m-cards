@@ -112,12 +112,12 @@ function createCard() {
 	const card: Card = {
 		id: genId(),
 		name: genText({ minWords: 1, maxWords: 5 }),
-		front: genText({ minWords: 1, maxWords: 25 }),
+		front: { value: genText({ minWords: 1, maxWords: 25 }), isHtml: false },
 		registeredAt: genDatetime(),
 	};
 
 	if (genBool()) {
-		card.back = genText({ minWords: 1, maxWords: 25 });
+		card.back = { value: genText({ minWords: 1, maxWords: 25 }), isHtml: false };
 	}
 
 	return card;

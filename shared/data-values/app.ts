@@ -1,9 +1,14 @@
+export type CardSide = {
+	value: string;
+	isHtml: boolean;
+};
+
 export type Card = {
 	id: string;
-	name: string;
-	front: string;
 	registeredAt: string;
-	back?: string;
+	name: string;
+	front: CardSide;
+	back?: CardSide;
 };
 
 export type CardSet = {

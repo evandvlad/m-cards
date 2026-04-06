@@ -1,6 +1,8 @@
-type Props = {
-	front: string;
-	back?: string;
+import type { CardSide } from "~shared/data-values/app.ts";
+
+type Params = {
+	front: CardSide;
+	back?: CardSide;
 	isReversed: boolean;
 };
 
@@ -9,7 +11,7 @@ export class ActiveCardViewModel {
 	back;
 	isReversed;
 
-	constructor({ front, back, isReversed }: Props) {
+	constructor({ front, back, isReversed }: Params) {
 		this.front = front;
 		this.back = back;
 		this.isReversed = isReversed;

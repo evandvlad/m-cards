@@ -1,16 +1,17 @@
-import type { ComponentChild } from "preact";
+import type { CardSide } from "~shared/data-values/app.ts";
 
 import { classes } from "~client/lib/css-classes/index.ts";
 import { FlipCard } from "~client/elements/flip-card/index.tsx";
+import { CardSideContent } from "~client/components/card-side-content/index.tsx";
 
 import { pageContext } from "../page-context.ts";
 
-function Content({ content, isReversed }: { content: ComponentChild; isReversed: boolean }) {
+function Content({ content, isReversed }: { content: CardSide; isReversed: boolean }) {
 	const classNames = classes("page-active-card__content", {
 		"page-active-card__content--reversed": isReversed,
 	});
 
-	return <div class={classNames}>{content}</div>;
+	return <CardSideContent className={classNames} content={content} />;
 }
 
 export function ActiveCardContent() {

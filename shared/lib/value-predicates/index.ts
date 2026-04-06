@@ -55,3 +55,13 @@ export function hasProp<T extends object, K extends string>(
 ): value is ObjWithProp<T, K> {
 	return property in value;
 }
+
+export function isOneOf<const T>(value: unknown, set: T[]): value is T {
+	for (const val of set) {
+		if (val === value) {
+			return true;
+		}
+	}
+
+	return false;
+}

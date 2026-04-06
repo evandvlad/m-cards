@@ -1,7 +1,7 @@
 import { createId } from "~shared/lib/id/index.ts";
 import { getDatetime } from "~shared/lib/datetime/index.ts";
-import { assertCards, type Cards as FileCards } from "~shared/data-values/files/index.ts";
-import type { Card } from "~shared/data-values/app.ts";
+import { assertCards, type Card as FileCard, type Cards as FileCards } from "~shared/data-values/files/index.ts";
+import type { Card, CardSide } from "~shared/data-values/app.ts";
 
 import type { FsIo } from "~server/lib/fs-io.ts";
 
@@ -46,9 +46,25 @@ export class CardsAgent {
 	getData(): Card[] {
 		return this.#fileAgent.data.cards
 			.filter(({ inactive }) => !inactive)
-			.map(({ name, front, back, meta }) => {
-				const { id, registeredAt } = meta!;
-				return { id, name: name, front, back, registeredAt };
-			});
+			.map((fileCard) => this.#transformCard(fileCard));
+	}
+
+	#transformCard({ name, front, back, meta }: FileCard): Card {
+		const { id, registeredAt } = meta!;
+
+		return {
+			id,
+			name: name,
+			front: this.#transformCardSide(front),
+			back: typeof back !== "undefined" ? this.#transformCardSide(back) : undefined,
+			registeredAt,
+		};
+	}
+
+	#transformCardSide(fileCardSide: string): CardSide {
+		return {
+			value: fileCardSide,
+			isHtml: false,
+		};
 	}
 }
