@@ -1,6 +1,6 @@
 import { PageTitle } from "~client/components/page-title/index.tsx";
 
-import { ActiveCard } from "./active-card.tsx";
+import { Content } from "./content.tsx";
 import { pageContext } from "../page-context.ts";
 
 export function Main() {
@@ -9,7 +9,7 @@ export function Main() {
 	return (
 		<>
 			<PageTitle title={title} />
-			<ActiveCard />
+			<Content />
 		</>
 	);
 }

@@ -1,18 +1,25 @@
-import { Button } from "~client/elements/button/index.tsx";
-import RightIcon from "~client/icons/right.tsx";
+import { classes } from "~client/lib/css-classes/index.ts";
+import { FlipCard } from "~client/elements/flip-card/index.tsx";
+import { CardSideContent } from "~client/components/card-side-content/index.tsx";
 
 import { pageContext } from "../page-context.ts";
-import { ActiveCardContent } from "./active-card-content.tsx";
+
+function getClasses(isReversed: boolean) {
+	return classes("page-content-active-card", {
+		"page-content-active-card--reversed": isReversed,
+	});
+}
 
 export function ActiveCard() {
-	const { showNextCard } = pageContext.useContext();
+	const { activeCard } = pageContext.useContext();
+	const { front, back, isReversed } = activeCard.value;
 
-	return (
-		<div class="page-active-card">
-			<ActiveCardContent />
-			<Button className="page-active-card__show-next" onClick={showNextCard}>
-				<RightIcon className="page-active-card__show-next-icon" />
-			</Button>
-		</div>
-	);
+	return back
+		? (
+			<FlipCard
+				front={<CardSideContent className={getClasses(isReversed)} content={front} />}
+				back={<CardSideContent className={getClasses(!isReversed)} content={back} />}
+			/>
+		)
+		: <CardSideContent className={getClasses(isReversed)} content={front} />;
 }
