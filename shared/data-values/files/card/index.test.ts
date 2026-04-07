@@ -42,26 +42,112 @@ describe("card asserter", () => {
 
 	it("'front' is empty", () => {
 		expect(() => assertCard({ name: "foo", front: "" }, "E:")).toThrow(
-			`E: The "front" must be a non-empty string.`,
+			`E: The "front" is incorrect. Must be a non-empty string.`,
 		);
 	});
 
-	it("'front' is not string", () => {
+	it("'front' is not string or object", () => {
 		expect(() => assertCard({ name: "foo", front: 555 }, "E:")).toThrow(
-			`E: The "front" must be a non-empty string.`,
+			`E: The "front" is incorrect. Must be an object.`,
 		);
+	});
+
+	it("no 'front.type'", () => {
+		expect(() => assertCard({ name: "foo", front: {} }, "E:")).toThrow(
+			`E: The "front" is incorrect. There is no "type".`,
+		);
+	});
+
+	it("'front.type' is incorrect", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "TYPE" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. The "type" must be one of these - internal.`,
+		);
+	});
+
+	it("no 'front.value'", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "internal" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. There is no "value".`,
+		);
+	});
+
+	it("'front.value' is empty", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "internal", value: "" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. The "value" must be a non-empty string.`,
+		);
+	});
+
+	it("no 'front.isHtml'", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "internal", value: "foo" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. There is no "isHtml".`,
+		);
+	});
+
+	it("'front.isHtml' is incorrect", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "internal", value: "foo", isHtml: 12 } }, "E:")).toThrow(
+			`E: The "front" is incorrect. The "isHtml" must be a boolean.`,
+		);
+	});
+
+	it("success with 'front' object", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "internal", value: "foo", isHtml: false } }, "E:")).not
+			.toThrow();
 	});
 
 	it("'back' is empty", () => {
 		expect(() => assertCard({ name: "foo", front: "bar", back: "" }, "E:")).toThrow(
-			`E: The "back" must be a non-empty string or empty.`,
+			`E: The "back" is incorrect. Must be a non-empty string.`,
 		);
 	});
 
-	it("'back' is not string", () => {
+	it("'back' is not string or object", () => {
 		expect(() => assertCard({ name: "foo", front: "bar", back: 999 }, "E:")).toThrow(
-			`E: The "back" must be a non-empty string or empty.`,
+			`E: The "back" is incorrect. Must be an object.`,
 		);
+	});
+
+	it("no 'back.type'", () => {
+		expect(() => assertCard({ name: "foo", front: "bar", back: {} }, "E:")).toThrow(
+			`E: The "back" is incorrect. There is no "type".`,
+		);
+	});
+
+	it("'back.type' is incorrect", () => {
+		expect(() => assertCard({ name: "foo", front: "bar", back: { type: "TYPE" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. The "type" must be one of these - internal.`,
+		);
+	});
+
+	it("no 'back.value'", () => {
+		expect(() => assertCard({ name: "foo", front: "bar", back: { type: "internal" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. There is no "value".`,
+		);
+	});
+
+	it("'back.value' is empty", () => {
+		expect(() => assertCard({ name: "foo", front: "bar", back: { type: "internal", value: "" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. The "value" must be a non-empty string.`,
+		);
+	});
+
+	it("no 'back.isHtml'", () => {
+		expect(() => assertCard({ name: "foo", front: "bar", back: { type: "internal", value: "foo" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. There is no "isHtml".`,
+		);
+	});
+
+	it("'back.isHtml' is incorrect", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: "bar", back: { type: "internal", value: "foo", isHtml: 12 } }, "E:")
+		).toThrow(
+			`E: The "back" is incorrect. The "isHtml" must be a boolean.`,
+		);
+	});
+
+	it("success with 'back' object", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: "bar", back: { type: "internal", value: "foo", isHtml: false } }, "E:")
+		).not
+			.toThrow();
 	});
 
 	it("'inactive' is not boolean", () => {

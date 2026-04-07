@@ -56,7 +56,7 @@ export function hasProp<T extends object, K extends string>(
 	return property in value;
 }
 
-export function isOneOf<const T>(value: unknown, set: T[]): value is T {
+export function isOneOf<const T>(value: unknown, set: readonly T[]): value is T {
 	for (const val of set) {
 		if (val === value) {
 			return true;
