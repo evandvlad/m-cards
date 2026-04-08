@@ -1,4 +1,3 @@
-import { join } from "@std/path/join";
 import { parse, stringify, type XmlElement } from "@std/xml";
 
 import { AppError, assert, assertNonNullable } from "~shared/lib/error/index.ts";
@@ -6,6 +5,8 @@ import { isFilledString } from "~shared/lib/value-predicates/index.ts";
 import { cardTemplateIdAttrName } from "~shared/data-values/files/index.ts";
 
 import type { FsIo } from "~server/lib/fs-io.ts";
+
+import { resolveFilepath } from "../file-path-resolver/index.ts";
 
 type Registry = Map<string, Map<string, string>>;
 
@@ -26,7 +27,7 @@ export class CardTemplatesProvider {
 	}
 
 	async getTemplate({ htmlPath, templateId }: { htmlPath: string; templateId: string }) {
-		const filepath = join(this.#baseFilepath, "..", htmlPath);
+		const filepath = resolveFilepath({ base: this.#baseFilepath, relative: htmlPath });
 		const registry = CardTemplatesProvider.#registry;
 
 		if (!registry.has(filepath)) {

@@ -1,5 +1,3 @@
-import { join } from "@std/path/join";
-
 import { createId } from "~shared/lib/id/index.ts";
 import { getDatetime } from "~shared/lib/datetime/index.ts";
 import { assertCardSet, type CardSet as FileCardSet } from "~shared/data-values/files/index.ts";
@@ -9,6 +7,7 @@ import type { FsIo } from "~server/lib/fs-io.ts";
 
 import { FileAgent } from "../file-agent/index.ts";
 import { CardsAgent } from "../cards-agent/index.ts";
+import { resolveFilepath } from "../file-path-resolver/index.ts";
 
 type Params = {
 	filepath: string;
@@ -31,7 +30,9 @@ export class CardSetAgent {
 		const { data } = fileAgent;
 
 		const cardsAgents = await Array.fromAsync(
-			data.cards.map((path) => CardsAgent.create({ filepath: join(filepath, "..", path), fsIo })),
+			data.cards.map((path) =>
+				CardsAgent.create({ filepath: resolveFilepath({ base: filepath, relative: path }), fsIo })
+			),
 		);
 
 		return new this({ fileAgent, cardsAgents });
