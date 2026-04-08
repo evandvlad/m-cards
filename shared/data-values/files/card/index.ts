@@ -1,8 +1,9 @@
-import { AppError } from "~shared/lib/error/index.ts";
+import { AppError, assertNever } from "~shared/lib/error/index.ts";
 import {
 	hasProp,
 	isBoolean,
 	isFilledString,
+	isHtmlFilepathString,
 	isIsoDatetimeString,
 	isObject,
 	isoDatetimeFormat,
@@ -10,15 +11,21 @@ import {
 	isString,
 } from "~shared/lib/value-predicates/index.ts";
 
-const cardSideSettingsType = ["internal"] as const;
+const cardSideTypes = ["internal", "external"] as const;
 
-type InternalCardSideSettings = {
-	type: typeof cardSideSettingsType[0];
+type InternalCardSide = {
+	type: typeof cardSideTypes[0];
 	value: string;
 	isHtml: boolean;
 };
 
-export type CardSide = string | InternalCardSideSettings;
+type ExternalCardSide = {
+	type: typeof cardSideTypes[1];
+	htmlPath: string;
+	templateId: string;
+};
+
+export type CardSide = string | InternalCardSide | ExternalCardSide;
 
 export type CardMeta = {
 	id: string;
@@ -50,28 +57,57 @@ function assertCardSide(data: unknown, baseMessage: string): asserts data is Car
 		throw new AppError(`${baseMessage} There is no "type".`);
 	}
 
-	if (!isOneOf(data.type, cardSideSettingsType)) {
-		throw new AppError(`${baseMessage} The "type" must be one of these - ${cardSideSettingsType}.`);
+	if (!isOneOf(data.type, cardSideTypes)) {
+		throw new AppError(`${baseMessage} The "type" must be one of these - ${cardSideTypes.join(", ")}.`);
 	}
 
-	if (data.type === "internal") {
-		if (!hasProp(data, "value")) {
-			throw new AppError(`${baseMessage} There is no "value".`);
+	const { type } = data;
+
+	switch (type) {
+		case "internal": {
+			if (!hasProp(data, "value")) {
+				throw new AppError(`${baseMessage} There is no "value".`);
+			}
+
+			if (!isFilledString(data.value)) {
+				throw new AppError(`${baseMessage} The "value" must be a non-empty string.`);
+			}
+
+			if (!hasProp(data, "isHtml")) {
+				throw new AppError(`${baseMessage} There is no "isHtml".`);
+			}
+
+			if (!isBoolean(data.isHtml)) {
+				throw new AppError(
+					`${baseMessage} The "isHtml" must be a boolean.`,
+				);
+			}
+
+			return;
 		}
 
-		if (!isFilledString(data.value)) {
-			throw new AppError(`${baseMessage} The "value" must be a non-empty string.`);
+		case "external": {
+			if (!hasProp(data, "htmlPath")) {
+				throw new AppError(`${baseMessage} There is no "htmlPath".`);
+			}
+
+			if (!isHtmlFilepathString(data.htmlPath)) {
+				throw new AppError(`${baseMessage} The "htmlPath" is incorrect.`);
+			}
+
+			if (!hasProp(data, "templateId")) {
+				throw new AppError(`${baseMessage} There is no "templateId".`);
+			}
+
+			if (!isFilledString(data.templateId)) {
+				throw new AppError(`${baseMessage} The "templateId" must be a non-empty string.`);
+			}
+
+			return;
 		}
 
-		if (!hasProp(data, "isHtml")) {
-			throw new AppError(`${baseMessage} There is no "isHtml".`);
-		}
-
-		if (!isBoolean(data.isHtml)) {
-			throw new AppError(
-				`${baseMessage} The "isHtml" must be a boolean.`,
-			);
-		}
+		default:
+			assertNever(type);
 	}
 }
 

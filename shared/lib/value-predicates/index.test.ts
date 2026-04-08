@@ -6,6 +6,7 @@ import {
 	isArray,
 	isBoolean,
 	isFilledString,
+	isHtmlFilepathString,
 	isIsoDatetimeString,
 	isJsonFilepathString,
 	isNonNullable,
@@ -52,6 +53,18 @@ describe("value-predicates", () => {
 
 		expect(isJsonFilepathString("1.json")).toBe(true);
 		expect(isJsonFilepathString("/foo/bar.json")).toBe(true);
+	});
+
+	it("is HTML filepath string", () => {
+		expect(isHtmlFilepathString(undefined)).toBe(false);
+		expect(isHtmlFilepathString("")).toBe(false);
+		expect(isHtmlFilepathString("foo")).toBe(false);
+		expect(isHtmlFilepathString("./foo/bar")).toBe(false);
+		expect(isHtmlFilepathString("/foo/bar.htm")).toBe(false);
+		expect(isHtmlFilepathString(".html")).toBe(false);
+
+		expect(isHtmlFilepathString("1.html")).toBe(true);
+		expect(isHtmlFilepathString("/foo/bar.html")).toBe(true);
 	});
 
 	it("is uinteger", () => {

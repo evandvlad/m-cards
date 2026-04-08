@@ -1,6 +1,7 @@
 import { createId } from "~shared/lib/id/index.ts";
 import { getDatetime } from "~shared/lib/datetime/index.ts";
 import { isString } from "~shared/lib/value-predicates/index.ts";
+import { assertNever } from "~shared/lib/error/index.ts";
 import {
 	assertCards,
 	type Card as FileCard,
@@ -76,9 +77,23 @@ export class CardsAgent {
 			};
 		}
 
-		return {
-			value: fileCardSide.value,
-			isHtml: fileCardSide.isHtml,
-		};
+		const { type } = fileCardSide;
+
+		switch (type) {
+			case "internal":
+				return {
+					value: fileCardSide.value,
+					isHtml: fileCardSide.isHtml,
+				};
+
+			case "external":
+				return {
+					value: fileCardSide.htmlPath, // @TODO change it later
+					isHtml: true,
+				};
+
+			default:
+				assertNever(type);
+		}
 	}
 }

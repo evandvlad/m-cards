@@ -19,14 +19,20 @@ export function isIsoDatetimeString(value: unknown): value is string {
 	return isString(value) && isoDatetimeRegExp.test(value);
 }
 
-export function isJsonFilepathString(value: unknown): value is string {
+function isFilepathString(value: unknown, suffix: string): value is string {
 	if (!isString(value)) {
 		return false;
 	}
 
-	const suffix = ".json";
-
 	return value.endsWith(suffix) && value.length > suffix.length;
+}
+
+export function isJsonFilepathString(value: unknown): value is string {
+	return isFilepathString(value, ".json");
+}
+
+export function isHtmlFilepathString(value: unknown): value is string {
+	return isFilepathString(value, ".html");
 }
 
 export function isUInteger(value: unknown): value is number {

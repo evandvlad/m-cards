@@ -60,7 +60,7 @@ describe("card asserter", () => {
 
 	it("'front.type' is incorrect", () => {
 		expect(() => assertCard({ name: "foo", front: { type: "TYPE" } }, "E:")).toThrow(
-			`E: The "front" is incorrect. The "type" must be one of these - internal.`,
+			`E: The "front" is incorrect. The "type" must be one of these - internal, external.`,
 		);
 	});
 
@@ -88,8 +88,47 @@ describe("card asserter", () => {
 		);
 	});
 
-	it("success with 'front' object", () => {
+	it("success with 'front' object (internal)", () => {
 		expect(() => assertCard({ name: "foo", front: { type: "internal", value: "foo", isHtml: false } }, "E:")).not
+			.toThrow();
+	});
+
+	it("no 'front.htmlPath'", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "external" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. There is no "htmlPath".`,
+		);
+	});
+
+	it("'front.htmlPath' is empty", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "external", htmlPath: "" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. The "htmlPath" is incorrect`,
+		);
+	});
+
+	it("'front.htmlPath' is incorrect", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "external", htmlPath: "./foo.json" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. The "htmlPath" is incorrect.`,
+		);
+	});
+
+	it("no 'front.templateId'", () => {
+		expect(() => assertCard({ name: "foo", front: { type: "external", htmlPath: "foo/bar.html" } }, "E:")).toThrow(
+			`E: The "front" is incorrect. There is no "templateId".`,
+		);
+	});
+
+	it("'front.templateId' is empty", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: { type: "external", htmlPath: "foo/bar.html", templateId: "" } }, "E:")
+		).toThrow(
+			`E: The "front" is incorrect. The "templateId" must be a non-empty string.`,
+		);
+	});
+
+	it("success with 'front' object (external)", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: { type: "external", htmlPath: "foo/bar.html", templateId: "baz" } }, "E:")
+		).not
 			.toThrow();
 	});
 
@@ -113,7 +152,7 @@ describe("card asserter", () => {
 
 	it("'back.type' is incorrect", () => {
 		expect(() => assertCard({ name: "foo", front: "bar", back: { type: "TYPE" } }, "E:")).toThrow(
-			`E: The "back" is incorrect. The "type" must be one of these - internal.`,
+			`E: The "back" is incorrect. The "type" must be one of these - internal, external.`,
 		);
 	});
 
@@ -143,9 +182,60 @@ describe("card asserter", () => {
 		);
 	});
 
-	it("success with 'back' object", () => {
+	it("success with 'back' object (internal)", () => {
 		expect(() =>
 			assertCard({ name: "foo", front: "bar", back: { type: "internal", value: "foo", isHtml: false } }, "E:")
+		).not
+			.toThrow();
+	});
+
+	it("no 'back.htmlPath'", () => {
+		expect(() => assertCard({ name: "foo", front: "foo", back: { type: "external" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. There is no "htmlPath".`,
+		);
+	});
+
+	it("'back.htmlPath' is empty", () => {
+		expect(() => assertCard({ name: "foo", front: "foo", back: { type: "external", htmlPath: "" } }, "E:")).toThrow(
+			`E: The "back" is incorrect. The "htmlPath" is incorrect`,
+		);
+	});
+
+	it("'back.htmlPath' is incorrect", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: "foo", back: { type: "external", htmlPath: "./foo.json" } }, "E:")
+		).toThrow(
+			`E: The "back" is incorrect. The "htmlPath" is incorrect.`,
+		);
+	});
+
+	it("no 'back.templateId'", () => {
+		expect(() =>
+			assertCard({ name: "foo", front: "foo", back: { type: "external", htmlPath: "foo/bar.html" } }, "E:")
+		).toThrow(
+			`E: The "back" is incorrect. There is no "templateId".`,
+		);
+	});
+
+	it("'back.templateId' is empty", () => {
+		expect(() =>
+			assertCard({
+				name: "foo",
+				front: "foo",
+				back: { type: "external", htmlPath: "foo/bar.html", templateId: "" },
+			}, "E:")
+		).toThrow(
+			`E: The "back" is incorrect. The "templateId" must be a non-empty string.`,
+		);
+	});
+
+	it("success with 'back' object (external)", () => {
+		expect(() =>
+			assertCard({
+				name: "foo",
+				front: "foo",
+				back: { type: "external", htmlPath: "foo/bar.html", templateId: "baz" },
+			}, "E:")
 		).not
 			.toThrow();
 	});
