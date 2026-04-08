@@ -20,8 +20,9 @@ describe("card-sets-agent", () => {
 		});
 
 		const agent = await CardSetsAgent.create({ filepath, fsIo });
+		const { items } = await agent.getSets();
 
-		expect(agent.getSets().items.length).toBe(2);
+		expect(items.length).toBe(2);
 	});
 
 	it("find by id", async () => {
@@ -36,10 +37,10 @@ describe("card-sets-agent", () => {
 
 		const agent = await CardSetsAgent.create({ filepath, fsIo });
 
-		expect(agent.findSetById("11111")).toBe(null);
+		expect(await agent.findSetById("11111")).toBe(null);
 
 		const setId = JSON.parse(fsIo.storage[setFilepath]).meta.id;
-		const cardSet = agent.findSetById(setId);
+		const cardSet = await agent.findSetById(setId);
 
 		expect(setId).toBe(cardSet!.id);
 	});

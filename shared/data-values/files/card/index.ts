@@ -13,6 +13,8 @@ import {
 
 const cardSideTypes = ["internal", "external"] as const;
 
+export const cardTemplateIdAttrName = "data-id";
+
 type InternalCardSide = {
 	type: typeof cardSideTypes[0];
 	value: string;

@@ -33,7 +33,8 @@ describe("card-set-agent", () => {
 		});
 
 		const agent = await CardSetAgent.create({ filepath, fsIo });
+		const { cards } = await agent.getData();
 
-		expect(agent.getData().cards.length).toBe(cardsData.cards.length);
+		expect(cards.length).toBe(cardsData.cards.length);
 	});
 });

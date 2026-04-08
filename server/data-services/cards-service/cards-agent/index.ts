@@ -13,6 +13,7 @@ import type { Card, CardSide } from "~shared/data-values/app.ts";
 import type { FsIo } from "~server/lib/fs-io.ts";
 
 import { FileAgent } from "../file-agent/index.ts";
+import { CardTemplatesProvider } from "./card-templates-provider.ts";
 
 type Params = {
 	filepath: string;
@@ -21,6 +22,7 @@ type Params = {
 
 export class CardsAgent {
 	#fileAgent;
+	#cardTemplatesProvider;
 
 	static async create({ filepath, fsIo }: Params) {
 		const fileAgent = await FileAgent.create<FileCards>({ filepath, dataAsserter: assertCards, fsIo });
@@ -43,33 +45,37 @@ export class CardsAgent {
 			});
 		}
 
-		return new this({ fileAgent });
+		return new this({ fileAgent, fsIo });
 	}
 
-	private constructor({ fileAgent }: { fileAgent: FileAgent<FileCards> }) {
+	private constructor({ fileAgent, fsIo }: { fileAgent: FileAgent<FileCards>; fsIo: FsIo }) {
 		this.#fileAgent = fileAgent;
+		this.#cardTemplatesProvider = new CardTemplatesProvider({ baseFilepath: fileAgent.filepath, fsIo });
 	}
 
-	getData(): Card[] {
-		return this.#fileAgent.data.cards
-			.filter(({ inactive }) => !inactive)
-			.map((fileCard) => this.#transformCard(fileCard));
+	async getData() {
+		const activeFileCards = this.#fileAgent.data.cards.filter(({ inactive }) => !inactive);
+		const result: Card[] = await Array.fromAsync(activeFileCards.map((fileCard) => this.#transformCard(fileCard)));
+
+		return result;
 	}
 
-	#transformCard({ name, front, back, meta }: FileCard): Card {
+	async #transformCard({ name, front, back, meta }: FileCard) {
 		const { id, registeredAt } = meta!;
 		const hasBack = typeof back !== "undefined";
 
-		return {
+		const card: Card = {
 			id,
 			name: name,
-			front: this.#transformCardSide(front),
-			back: hasBack ? this.#transformCardSide(back) : undefined,
+			front: await this.#transformCardSide(front),
+			back: hasBack ? await this.#transformCardSide(back) : undefined,
 			registeredAt,
 		};
+
+		return card;
 	}
 
-	#transformCardSide(fileCardSide: FileCardSide): CardSide {
+	async #transformCardSide(fileCardSide: FileCardSide): Promise<CardSide> {
 		if (isString(fileCardSide)) {
 			return {
 				value: fileCardSide,
@@ -88,7 +94,7 @@ export class CardsAgent {
 
 			case "external":
 				return {
-					value: fileCardSide.htmlPath, // @TODO change it later
+					value: await this.#cardTemplatesProvider.getTemplate(fileCardSide),
 					isHtml: true,
 				};
 

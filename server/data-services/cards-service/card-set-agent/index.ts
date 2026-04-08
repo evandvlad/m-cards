@@ -19,7 +19,7 @@ export class CardSetAgent {
 	id;
 
 	#fileAgent;
-	#cardSetAgents;
+	#cardsAgents;
 
 	static async create({ filepath, fsIo }: Params) {
 		const fileAgent = await FileAgent.create<FileCardSet>({ filepath, dataAsserter: assertCardSet, fsIo });
@@ -30,32 +30,36 @@ export class CardSetAgent {
 
 		const { data } = fileAgent;
 
-		const cardSetAgents = await Array.fromAsync(
+		const cardsAgents = await Array.fromAsync(
 			data.cards.map((path) => CardsAgent.create({ filepath: join(filepath, "..", path), fsIo })),
 		);
 
-		return new this({ fileAgent, cardSetAgents });
+		return new this({ fileAgent, cardsAgents });
 	}
 
 	private constructor(
-		{ fileAgent, cardSetAgents }: { fileAgent: FileAgent<FileCardSet>; cardSetAgents: CardsAgent[] },
+		{ fileAgent, cardsAgents }: { fileAgent: FileAgent<FileCardSet>; cardsAgents: CardsAgent[] },
 	) {
 		this.#fileAgent = fileAgent;
-		this.#cardSetAgents = cardSetAgents;
+		this.#cardsAgents = cardsAgents;
 
 		this.id = fileAgent.data.meta!.id;
 	}
 
-	getData(): CardSet {
+	async getData() {
 		const { name, meta, randomCardSides = true } = this.#fileAgent.data;
 		const { id, registeredAt } = meta!;
 
-		return {
+		const cards = (await Array.fromAsync(this.#cardsAgents.map((agent) => agent.getData()))).flat(1);
+
+		const result: CardSet = {
 			id,
 			name,
 			registeredAt,
 			randomCardSides,
-			cards: this.#cardSetAgents.map((agent) => agent.getData()).flat(1),
+			cards,
 		};
+
+		return result;
 	}
 }

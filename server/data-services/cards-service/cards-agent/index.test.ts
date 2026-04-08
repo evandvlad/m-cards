@@ -27,7 +27,8 @@ describe("cards-agent", () => {
 		const fsIo = new FsIo({ storage: { [filepath]: JSON.stringify(data) } });
 
 		const agent = await CardsAgent.create({ filepath, fsIo });
+		const result = await agent.getData();
 
-		expect(agent.getData().length).toBe(data.cards.length);
+		expect(result.length).toBe(data.cards.length);
 	});
 });

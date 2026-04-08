@@ -20,6 +20,7 @@
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/streams@^1.0.17": "1.0.17",
     "jsr:@std/testing@^1.0.17": "1.0.17",
+    "jsr:@std/xml@0.1": "0.1.0",
     "npm:@preact/signals@^2.8.2": "2.8.2_preact@10.29.0",
     "npm:preact@^10.29.0": "10.29.0"
   },
@@ -108,6 +109,9 @@
         "jsr:@std/internal",
         "jsr:@std/path"
       ]
+    },
+    "@std/xml@0.1.0": {
+      "integrity": "e2b7755a45d7d252bea25d8058eff1edffa8de5ab9802cca8f253b70ede733bb"
     }
   },
   "npm": {
@@ -142,7 +146,8 @@
       },
       "server": {
         "dependencies": [
-          "jsr:@std/http@^1.0.25"
+          "jsr:@std/http@^1.0.25",
+          "jsr:@std/xml@0.1"
         ]
       }
     }

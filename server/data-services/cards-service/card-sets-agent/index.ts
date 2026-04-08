@@ -30,14 +30,16 @@ export class CardSetsAgent {
 		this.#cardSetAgents = cardSetAgents;
 	}
 
-	getSets(): CardSets {
-		return {
-			items: this.#cardSetAgents.map((agent) => agent.getData()),
+	async getSets() {
+		const result: CardSets = {
+			items: await Array.fromAsync(this.#cardSetAgents.map((agent) => agent.getData())),
 		};
+
+		return result;
 	}
 
-	findSetById(id: string) {
+	async findSetById(id: string) {
 		const cardSetAgent = this.#cardSetAgents.find((agent) => agent.id === id);
-		return cardSetAgent?.getData() ?? null;
+		return cardSetAgent ? await cardSetAgent.getData() : null;
 	}
 }
